@@ -1,5 +1,8 @@
 <?php declare(strict_types=1);
 
+/**
+ * TEST ANONYMOUS CLASS INSTEAD OF STD CLASS
+ */
 function registerCommand(string $name, string $desc): object {
     $cmd = new stdClass();
     $cmd->name = $name;
