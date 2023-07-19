@@ -22,10 +22,10 @@ if($argc > 1) {
     if(in_array($command, $cmd_names)) {
         switch($command) {
             case 'install':
-                ($install->exec)();
+                ($install->exec)(@$argv[2]);
                 break;
             case 'search':
-                ($search->exec)();
+                ($search->exec)(@$argv[2]);
                 break;
             case 'version':
                 ($version->exec)();
@@ -33,6 +33,6 @@ if($argc > 1) {
         }
     }
     else {
-        echo 'Unknown command ' . $command.el;
+        echo 'Unknown command: ' . $command.el;
     }
 }

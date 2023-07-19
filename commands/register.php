@@ -23,14 +23,17 @@ $cmd_names = array_map(function($object) {
     return $object->name;
 }, $cmds);
 
-$install->exec = function() {
-    echo 'Test install func'.el;
-};
+/**
+ * minepak install
+ */
+require_once __DIR__ . '/mp_install.php';
 
-$search->exec = function() {
-    echo 'Test search func'.el;
-};
+/**
+ * minepak search
+ */
+require_once __DIR__ . '/mp_search.php';
 
-$version->exec = function() {
-    echo 'minepak cli v0.0.1'.el;
-};
+/**
+ * minepak version
+ */
+require_once __DIR__ . '/mp_version.php';
