@@ -1,0 +1,26 @@
+#!/opt/homebrew/bin/php
+<?php declare(strict_types=1);
+
+if(php_sapi_name() !== 'cli') {
+    exit;
+}
+
+const el = PHP_EOL;
+
+function reg_cmd(string $name, array $args = []): object {
+    $cmd = new stdClass();
+    $cmd->name = $name;
+    $cmd->args = $args;
+
+    return $cmd;
+}
+
+$test_cmd = reg_cmd('test');
+$version_cmd = reg_cmd('version');
+
+echo $test_cmd->name.el;
+echo $version_cmd->name.el;
+
+
+// $line = readline("Write your name: ");
+// echo "Hello, " . $line.el;
