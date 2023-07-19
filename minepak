@@ -20,13 +20,19 @@ if($argc > 1) {
     $command = $argv[1];
 
     if(in_array($command, $cmd_names)) {
-        echo $command . ' is valid' . el;
-
-        if($command == 'install' || $command == 'Install') {
-            echo $install->exec.el;
+        switch($command) {
+            case 'install':
+                ($install->exec)();
+                break;
+            case 'search':
+                ($search->exec)();
+                break;
+            case 'version':
+                ($version->exec)();
+                break;
         }
     }
     else {
-        echo 'Command not found: ' . $command.el;
+        echo 'Unknown command ' . $command.el;
     }
 }

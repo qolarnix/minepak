@@ -1,13 +1,14 @@
 <?php declare(strict_types=1);
 
-/**
- * TEST ANONYMOUS CLASS INSTEAD OF STD CLASS
- */
 function registerCommand(string $name, string $desc): object {
-    $cmd = new stdClass();
+    $cmd = new Class {
+        public $name;
+        public $desc;
+        public $exec;
+    };
+
     $cmd->name = $name;
     $cmd->desc = $desc;
-    $cmd->exec = 'exec test';
 
     return $cmd;
 }
@@ -21,3 +22,15 @@ $cmds = [
 $cmd_names = array_map(function($object) {
     return $object->name;
 }, $cmds);
+
+$install->exec = function() {
+    echo 'Test install func'.el;
+};
+
+$search->exec = function() {
+    echo 'Test search func'.el;
+};
+
+$version->exec = function() {
+    echo 'minepak cli v0.0.1'.el;
+};
