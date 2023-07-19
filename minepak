@@ -5,14 +5,34 @@ if(php_sapi_name() !== 'cli') {
     exit;
 }
 
+/**
+ * Format
+ */
 const el = PHP_EOL;
+const tab = "\t";
 
+/**
+ * Color
+ */
+const red = "\033[31m";
+const green = "\033[32m";
+const blue = "\033[34m";
+const magenta = "\033[35m";
+const yellow = "\033[33m";
+const cyan = "\033[36m";
+const black = "\033[30m";
+const white = "\033[37m";
+const reset = "\033[0m";
+
+/**
+ * Register commands
+ */
 require_once __DIR__ . '/commands/register.php';
 
 if($argc == 1) {
     echo 'Available Commands'.el;
     foreach($cmds as $cmd) {
-        echo $cmd->name . "\t\t" . $cmd->desc . el;
+        echo cyan.$cmd->name.white.tab.$cmd->desc.el;
     }
 }
 
