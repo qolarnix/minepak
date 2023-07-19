@@ -7,30 +7,26 @@ if(php_sapi_name() !== 'cli') {
 
 const el = PHP_EOL;
 
-function reg_cmd(string $name): object {
-    $cmd = new stdClass();
-    $cmd->name = $name;
-
-    return $cmd;
-}
-
-$cmds = [
-    $install = reg_cmd('install'),
-    $search = reg_cmd('search'),
-    $version = reg_cmd('version'),
-];
-
-print_r($cmds);
+require_once __DIR__ . '/commands/register.php';
 
 if($argc == 1) {
-    echo el . 'Available Commands' . el;
+    echo 'Available Commands'.el;
     foreach($cmds as $cmd) {
-        echo ' ' . $cmd->name . el;
+        echo $cmd->name . "\t\t" . $cmd->desc . el;
     }
-    echo el;
 }
 
 if($argc > 1) {
     $command = $argv[1];
-    echo $command.el;
+
+    if(in_array($command, $cmd_names)) {
+        echo $command . ' is valid' . el;
+
+        if($command == 'install' || $command == 'Install') {
+            echo $install->exec.el;
+        }
+    }
+    else {
+        echo 'Command not found: ' . $command.el;
+    }
 }
