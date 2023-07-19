@@ -19,20 +19,20 @@ if($argc == 1) {
 if($argc > 1) {
     $command = $argv[1];
 
-    if(in_array($command, $cmd_names)) {
-        switch($command) {
-            case 'install':
-                ($install->exec)(@$argv[2]);
-                break;
-            case 'search':
-                ($search->exec)(@$argv[2]);
-                break;
-            case 'version':
-                ($version->exec)();
-                break;
-        }
-    }
-    else {
-        echo 'Unknown command: ' . $command.el;
+    switch($command) {
+        case 'install':
+        case '-i':
+            ($install->exec)(@$argv[2]);
+            break;
+        case 'search':
+        case '-s':
+            ($search->exec)(@$argv[2]);
+            break;
+        case 'version':
+        case '-v':
+            ($version->exec)();
+            break;
+        default:
+            echo 'Unknown command: ' . $command.el;
     }
 }
