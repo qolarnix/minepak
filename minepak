@@ -1,0 +1,40 @@
+#!/usr/bin/env php
+<?php 
+
+/**
+ * Strict types
+ */
+declare(strict_types=1);
+
+if(php_sapi_name() !== 'cli') exit;
+
+/**
+ * Composer autoload
+ */
+require __DIR__ . '/vendor/autoload.php';
+
+require __DIR__ . '/plugins/template.php';
+
+require __DIR__ . '/commands/register.php';
+
+use function Termwind\{render};
+
+$app = function(array $input) use($template, $commands) {
+    if(count($input) < 2) {
+        render($template->render('welcome', [
+            'title' => 'Minepak',
+            'text' => 'The package manager for minecraft plugins',
+            'commands' => $commands,
+        ]));
+        return;
+    }
+
+    $command_name = $input[1];
+    $arguments = array_slice($input, 2);
+
+    if(isset($commands[$command_name])) {
+        call_user_func($commands[$command_name]['callback'], $arguments);
+    }
+};
+
+$app($argv);

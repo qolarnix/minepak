@@ -1,0 +1,6 @@
+{
+    "require": {
+        "nunomaduro/termwind": "^2.0",
+        "glacial/template": "^2.0"
+    }
+}
