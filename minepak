@@ -17,15 +17,9 @@ require __DIR__ . '/plugins/template.php';
 
 require __DIR__ . '/commands/register.php';
 
-use function Termwind\{render};
-
-$app = function(array $input) use($template, $commands) {
+$app = function(array $input) use($commands) {
     if(count($input) < 2) {
-        render($template->render('welcome', [
-            'title' => 'Minepak',
-            'text' => 'The package manager for minecraft plugins',
-            'commands' => $commands,
-        ]));
+        call_user_func($commands['help']['callback']);
         return;
     }
 

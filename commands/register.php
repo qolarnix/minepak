@@ -5,6 +5,8 @@
 
 declare(strict_types=1);
 
+use function Termwind\{render};
+
 $commands = [];
 
 function registerCommand(string $name, string $desc, callable $callback) {
@@ -19,7 +21,12 @@ function registerCommand(string $name, string $desc, callable $callback) {
 registerCommand(
     name: 'help', 
     desc: 'displays this menu', 
-    callback: function() {
-        echo "this is the help menu";
+    callback: function() use($template) {
+        global $commands;
+        render($template->render('welcome', [
+            'title' => 'Minepak',
+            'text' => 'The package manager for minecraft plugins',
+            'commands' => $commands,
+        ]));
     }
 );
