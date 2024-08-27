@@ -30,3 +30,13 @@ registerCommand(
         ]));
     }
 );
+
+registerCommand(
+    name: 'init',
+    desc: 'initialize your plugin directory',
+    callback: function() {
+        $cd = getcwd();
+        
+        
+    }
+);
