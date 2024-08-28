@@ -5,6 +5,8 @@
 
 declare(strict_types=1);
 
+use Yosymfony\Toml\TomlBuilder;
+
 use function Termwind\{render};
 
 $commands = [];
@@ -18,6 +20,9 @@ function registerCommand(string $name, string $desc, callable $callback) {
     ];
 }
 
+/**
+ * Register help command
+ */
 registerCommand(
     name: 'help', 
     desc: 'displays this menu', 
@@ -31,12 +36,89 @@ registerCommand(
     }
 );
 
+/**
+ * Register init command
+ */
 registerCommand(
     name: 'init',
     desc: 'initialize your plugin directory',
     callback: function() {
-        $cd = getcwd();
-        
-        
+
+        $tb = new TomlBuilder();
+
+        $tb_conf = clone $tb;
+        $minepak_conf = $tb_conf->addComment(' Minepak Config')
+            ->addValue('Environment', 'Server')
+            ->getTomlString();
+
+        $tb_lock = clone $tb;
+        $minepak_lock = $tb_lock->addComment(' Minepak Lock')
+            ->addValue('Plugins', array(
+                array('minepak', '1.0.0'),
+                array(new \DateTime())
+            ))
+            ->getTomlString();
+
+        if(!file_exists('minepak.conf')) {
+            file_put_contents('minepak.conf', $minepak_conf);
+        }
+
+        if(!file_exists('minepak.lock')) {
+            file_put_contents('minepak.lock', $minepak_lock);
+        }
+    }
+);
+
+/**
+ * Register clean command
+ */
+registerCommand(
+    name: 'clean',
+    desc: 'remove config and lock files',
+    callback: function() {
+        unlink('minepak.conf');
+        unlink('minepak.lock');
+    }
+);
+
+/**
+ * Register update command
+ */
+registerCommand(
+    name: 'update',
+    desc: 'update plugins',
+    callback: function() use($template) {
+        render($template->render('message', [
+            'title' => 'Minepak',
+            'text' => 'updating plugins...'
+        ]));
+    }
+);
+
+/**
+ * Register install command
+ */
+registerCommand(
+    name: 'install',
+    desc: 'install a plugin',
+    callback: function(array $args) {
+        global $commands;
+        if(!file_exists('minepak.toml')) {
+            call_user_func($commands['init']['callback']);
+        }
+
+        $package_name = $args[0];
+        render('<p>installing '.$package_name.'...</p>');
+    }
+);
+
+/**
+ * Register remove command
+ */
+registerCommand(
+    name: 'remove',
+    desc: 'removes a plugin',
+    callback: function(array $args) {
+        echo 'removing ' . $args[0] . PHP_EOL;
     }
 );
