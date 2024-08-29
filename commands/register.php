@@ -49,6 +49,7 @@ registerCommand(
         $tb_conf = clone $tb;
         $minepak_conf = $tb_conf->addComment(' Minepak Config')
             ->addValue('Environment', 'Server')
+            ->addValue('Server Type', 'Paper')
             ->getTomlString();
 
         $tb_lock = clone $tb;

@@ -15,6 +15,8 @@ require __DIR__ . '/vendor/autoload.php';
 
 require __DIR__ . '/plugins/template.php';
 
+require __DIR__ . '/plugins/storage.php';
+
 require __DIR__ . '/commands/register.php';
 
 $app = function(array $input) use($commands) {

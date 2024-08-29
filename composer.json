@@ -2,6 +2,8 @@
     "require": {
         "nunomaduro/termwind": "^2.0",
         "glacial/template": "^2.0",
-        "yosymfony/toml": "^1.0"
+        "yosymfony/toml": "^1.0",
+        "league/flysystem": "^3.28",
+        "league/flysystem-aws-s3-v3": "^3.28"
     }
 }
