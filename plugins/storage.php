@@ -19,19 +19,7 @@ $adapter = new League\Flysystem\AwsS3V3\AwsS3V3Adapter(
     $client,
     'packages.minepak.com'
 );
-
 $filesystem = new League\Flysystem\Filesystem($adapter);
-
-/**
- * Download a package
- */
-function getPackage(S3Client $client, string $package_path, string $save_path) {
-    $client->getObject([
-        'Bucket' => 'packages.minepak.com',
-        'Key' => $package_path,
-        'SaveAs' => $save_path,
-    ]);
-}
 
 /**
  * List packages
@@ -42,9 +30,19 @@ function listPackages(Filesystem $fs): array {
     $packages = [];
     foreach($list as $i) {
         if(substr_count($i->path(), '/') > 1) continue;
-        
-        $packages[] = $i->path();
+        $packages[] = substr($i->path(), strpos($i->path(), '/') + 1);
     }
 
     return $packages;
+}
+
+/**
+ * Download a package
+ */
+function getPackage(S3Client $client, string $package_path, string $save_path) {
+    $client->getObject([
+        'Bucket' => 'packages.minepak.com',
+        'Key' => $package_path,
+        'SaveAs' => $save_path,
+    ]);
 }

@@ -14,8 +14,8 @@ if(php_sapi_name() !== 'cli') exit;
 require __DIR__ . '/vendor/autoload.php';
 
 require __DIR__ . '/plugins/template.php';
-
 require __DIR__ . '/plugins/storage.php';
+require __DIR__ . '/plugins/search.php';
 
 require __DIR__ . '/commands/register.php';
 

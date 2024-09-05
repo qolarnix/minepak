@@ -10,7 +10,6 @@ use Yosymfony\Toml\TomlBuilder;
 use function Termwind\{render};
 
 $commands = [];
-
 function registerCommand(string $name, string $desc, callable $callback) {
     global $commands;
     $commands[$name] = [
@@ -121,5 +120,26 @@ registerCommand(
     desc: 'removes a plugin',
     callback: function(array $args) {
         echo 'removing ' . $args[0] . PHP_EOL;
+    }
+);
+
+registerCommand(
+    name: 'list',
+    desc: 'list all packages',
+    callback: function() use($filesystem) {
+        $packages = listPackages($filesystem);
+        print_r($packages);
+    }
+);
+
+registerCommand(
+    name: 'search',
+    desc: 'search for a plugin',
+    callback: function(array $args) use($filesystem, $template) {
+        $results = similarSearch($args[0], listPackages($filesystem));
+        
+        render($template->render('search', [
+            'results' => $results
+        ]));
     }
 );
